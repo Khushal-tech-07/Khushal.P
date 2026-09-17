@@ -1,0 +1,6 @@
+{
+  "name": "Lumière Beauty",
+  "description": "Luxury beauty e-commerce with 3D visuals, smooth animations, and premium feminine aesthetic",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

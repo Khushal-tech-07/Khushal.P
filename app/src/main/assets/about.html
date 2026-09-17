@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Our Story — Lumière Beauty</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary: #FF6B9D;
+      --secondary: #C9184A;
+      --accent: #FFD6E0;
+      --gold: #D4AF37;
+      --gold-light: #F4E295;
+      --dark: #1A0A0F;
+      --dark-card: #250E17;
+      --light: #FFF5F7;
+      --text: #2D2D2D;
+      --text-muted: #8E7A82;
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.28);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-pill: 50px;
+      --transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--light);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, h4, .brand-font {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .editorial-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+    }
+
+    /* Loader */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, var(--dark), #330B1C);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .loader-emblem {
+      width: 60px;
+      height: 60px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: spinBorder 4s linear infinite;
+    }
+
+    @keyframes spinBorder {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Header */
+    header.main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 0.9rem 5%;
+      background: rgba(26, 10, 15, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: #FFF;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #FFF, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.82);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .nav-link:hover, .nav-link.active { color: #FFF; }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--gold));
+      border-radius: 2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFF;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .icon-btn:hover { background: var(--primary); transform: translateY(-2px); }
+
+    .cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--secondary);
+      color: #FFF;
+      font-size: 0.65rem;
+      font-weight: 700;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--dark);
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: #FFF;
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 320px;
+      height: 100vh;
+      background: var(--dark);
+      z-index: 2000;
+      padding: 2.5rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      border-left: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .mobile-drawer.open { right: 0; }
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .drawer-overlay.active { opacity: 1; pointer-events: all; }
+    .drawer-close { align-self: flex-end; background: none; border: none; color: #FFF; font-size: 1.5rem; cursor: pointer; }
+    .mobile-nav-list { list-style: none; display: flex; flex-direction: column; gap: 1.4rem; }
+    .mobile-nav-link { color: #FFF; text-decoration: none; font-size: 1.3rem; font-family: 'Playfair Display', serif; display: flex; justify-content: space-between; }
+    .mobile-nav-link.active { color: var(--primary); }
+
+    /* Full-Width Cinematic Video Banner */
+    .video-hero-banner {
+      position: relative;
+      height: 75vh;
+      min-height: 520px;
+      overflow: hidden;
+      margin-top: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #FFF;
+    }
+
+    .video-bg-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    /* Ambient Animated Canvas Video Simulation */
+    #ambient-video-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(26, 10, 15, 0.4) 0%, rgba(26, 10, 15, 0.88) 100%);
+      z-index: 2;
+    }
+
+    .video-hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 800px;
+      padding: 0 5%;
+    }
+
+    .video-eyebrow {
+      color: var(--gold-light);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .video-title {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .video-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.45rem;
+      color: var(--accent);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* Brand Story Section */
+    .story-section {
+      padding: 6rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .story-image-block {
+      position: relative;
+    }
+
+    .story-main-img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      box-shadow: 0 20px 45px rgba(26, 10, 15, 0.12);
+    }
+
+    .floating-accent-box {
+      position: absolute;
+      bottom: -25px;
+      right: -25px;
+      background: #FFF;
+      padding: 1.5rem 2rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 15px 35px rgba(201, 24, 74, 0.15);
+      border: 1px solid rgba(255, 107, 157, 0.3);
+      max-width: 220px;
+    }
+
+    .floating-accent-box h4 {
+      font-size: 2.2rem;
+      color: var(--secondary);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .floating-accent-box p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .story-text-block h2 {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .story-text-block p {
+      color: #555;
+      font-size: 1.05rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* Founder Quote Glassmorphism Card */
+    .quote-section {
+      padding: 5rem 5%;
+      background: radial-gradient(circle at 50% 50%, #350E20 0%, var(--dark) 100%);
+      color: #FFF;
+    }
+
+    .founder-quote-card {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 3.5rem 3rem;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .founder-quote-card i.quote-mark {
+      font-size: 2.8rem;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+
+    .founder-quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 2.8vw, 2rem);
+      line-height: 1.5;
+      font-style: italic;
+      color: #FFF;
+      margin-bottom: 2rem;
+    }
+
+    .founder-profile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .founder-avatar {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      object-fit: cover;
+    }
+
+    .founder-info h4 {
+      font-size: 1.2rem;
+      color: var(--gold-light);
+    }
+
+    .founder-info p {
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    /* Brand Milestones Timeline */
+    .timeline-section {
+      padding: 6rem 5%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .timeline-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .timeline-header h2 {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      color: var(--dark);
+    }
+
+    .timeline-wrapper {
+      position: relative;
+      padding: 2rem 0;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary), var(--gold), var(--secondary));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .timeline-item:nth-child(odd) {
+      justify-content: flex-start;
+    }
+
+    .timeline-item:nth-child(even) {
+      justify-content: flex-end;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--secondary);
+      border: 4px solid #FFF;
+      box-shadow: 0 0 12px rgba(201, 24, 74, 0.5);
+      z-index: 2;
+    }
+
+    .timeline-card {
+      width: 44%;
+      background: #FFF;
+      border-radius: var(--radius-md);
+      padding: 1.8rem;
+      box-shadow: 0 10px 30px rgba(26, 10, 15, 0.06);
+      border: 1px solid rgba(255, 107, 157, 0.15);
+      transition: var(--transition);
+    }
+
+    .timeline-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(201, 24, 74, 0.15);
+      border-color: var(--primary);
+    }
+
+    .timeline-year {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-title {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    .timeline-desc {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* Values 3D Cards */
+    .values-section {
+      padding: 6rem 5%;
+      background: #FFF;
+    }
+
+    .values-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .value-card {
+      background: var(--light);
+      border-radius: var(--radius-md);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      border: 1px solid rgba(255, 107, 157, 0.15);
+      box-shadow: 0 10px 30px rgba(26, 10, 15, 0.04);
+      transition: var(--transition);
+    }
+
+    .value-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 45px rgba(201, 24, 74, 0.15);
+      border-color: var(--primary);
+    }
+
+    .value-icon-box {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFF;
+      font-size: 1.8rem;
+      box-shadow: 0 10px 25px rgba(255, 107, 157, 0.4);
+    }
+
+    .value-title {
+      font-size: 1.3rem;
+      color: var(--dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .value-desc {
+      font-size: 0.92rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* Team Section */
+    .team-section {
+      padding: 6rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+
+    .team-card {
+      background: #FFF;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(26, 10, 15, 0.05);
+      border: 1px solid rgba(255, 107, 157, 0.15);
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .team-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(201, 24, 74, 0.15);
+    }
+
+    .team-avatar {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+    }
+
+    .team-details {
+      padding: 1.5rem;
+    }
+
+    .team-name {
+      font-size: 1.2rem;
+      color: var(--dark);
+      margin-bottom: 0.2rem;
+    }
+
+    .team-role {
+      font-size: 0.85rem;
+      color: var(--secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Cart Slide-out Drawer */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 100%;
+      max-width: 400px;
+      height: 100vh;
+      background: #FFF;
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.2);
+      z-index: 2500;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .cart-drawer.open { right: 0; }
+    .cart-header { padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; background: var(--light); }
+    .cart-header h3 { font-size: 1.3rem; color: var(--dark); }
+    .cart-close { background: none; border: none; font-size: 1.2rem; color: var(--text); cursor: pointer; }
+    .cart-items { flex-grow: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem; }
+    .cart-item { display: flex; gap: 12px; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid #F0F0F0; }
+    .cart-item-img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+    .cart-item-info { flex-grow: 1; }
+    .cart-item-title { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
+    .cart-item-price { color: var(--secondary); font-weight: 700; font-size: 0.88rem; }
+    .cart-item-remove { background: none; border: none; color: #999; cursor: pointer; }
+    .cart-footer { padding: 1.5rem; border-top: 1px solid rgba(0,0,0,0.08); background: var(--light); }
+    .cart-subtotal { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--dark); }
+    .checkout-btn { width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #FFF; border: none; border-radius: var(--radius-pill); font-weight: 700; font-size: 1rem; cursor: pointer; }
+
+    /* Toast */
+    .toast-msg {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(26, 10, 15, 0.92);
+      color: #FFF;
+      border: 1px solid var(--primary);
+      padding: 12px 24px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      transition: transform 0.4s ease;
+      pointer-events: none;
+    }
+    .toast-msg.show { transform: translateX(-50%) translateY(0); }
+
+    /* Footer */
+    footer.main-footer {
+      background: var(--dark);
+      color: #FFF;
+      padding: 4rem 5% 2rem;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .story-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .timeline-line { left: 20px; }
+      .timeline-dot { left: 20px; }
+      .timeline-card { width: calc(100% - 50px); margin-left: 50px; }
+      .timeline-item:nth-child(odd), .timeline-item:nth-child(even) { justify-content: flex-start; }
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div id="loader">
+    <div class="loader-emblem"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-text">LUMIÈRE<span style="color:var(--gold);">.</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="products.html" class="nav-link">Shop</a></li>
+        <li><a href="about.html" class="nav-link active">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="open-cart-btn" title="Shopping Bag">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-badge" id="cart-counter">0</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+  <div class="mobile-drawer" id="mobile-drawer">
+    <button class="drawer-close" id="drawer-close-btn">&times;</button>
+    <a href="index.html" class="brand-logo">
+      <span class="logo-text">LUMIÈRE<span style="color:var(--gold);">.</span></span>
+    </a>
+    <ul class="mobile-nav-list">
+      <li><a href="index.html" class="mobile-nav-link">Home <i class="fas fa-chevron-right"></i></a></li>
+      <li><a href="products.html" class="mobile-nav-link">Shop Collection <i class="fas fa-chevron-right"></i></a></li>
+      <li><a href="about.html" class="mobile-nav-link active">Our Story <i class="fas fa-chevron-right"></i></a></li>
+      <li><a href="contact.html" class="mobile-nav-link">Contact Us <i class="fas fa-chevron-right"></i></a></li>
+    </ul>
+  </div>
+
+  <!-- Cinematic Full-Width Video Banner -->
+  <div class="video-hero-banner">
+    <div class="video-bg-container">
+      <canvas id="ambient-video-canvas"></canvas>
+      <div class="video-overlay"></div>
+    </div>
+    <div class="video-hero-content">
+      <span class="video-eyebrow">The Maison Heritage</span>
+      <h1 class="video-title">The Art of Pure Radiance</h1>
+      <p class="video-sub">
+        "Born from a devotion to botanical alchemy, French perfumery, and the unapologetic power of glowing femininity."
+      </p>
+    </div>
+  </div>
+
+  <!-- Brand Story Section -->
+  <section class="story-section">
+    <div class="story-grid">
+      <div class="story-image-block">
+        <img src="https://picsum.photos/600/700?random=81" alt="Lumière Laboratories" class="story-main-img">
+        <div class="floating-accent-box">
+          <h4>100%</h4>
+          <p>Clean &amp; Cruelty-Free Botanical Formulations</p>
+        </div>
+      </div>
+
+      <div class="story-text-block">
+        <span style="color: var(--secondary); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.2em; display: block; margin-bottom: 0.6rem;">Genesis</span>
+        <h2>Awakening The Natural Light Within</h2>
+        <p>
+          Lumière Beauty was established in 2021 with an uncompromising mission: to banish toxic fillers and heavy synthetics from the luxury beauty landscape, replacing them with sensory, high-potency organic botanicals.
+        </p>
+        <p>
+          Our team of Parisian cosmetic chemists works closely with regenerative rose fields in Grasse and sustainable olive groves in Provence. Every drop of our formulas is bio-fermented to ensure molecular compatibility with all skin tones and sensitivity profiles.
+        </p>
+        <p>
+          We believe luxury beauty is not about masking who you are; it is an intimate ritual of honoring your true radiance, celebrating every curve, shade, and contour of your complexion.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder Quote Glassmorphism Card -->
+  <section class="quote-section">
+    <div class="founder-quote-card">
+      <i class="fas fa-quote-left quote-mark"></i>
+      <p class="founder-quote-text">
+        "Beauty is neither vanity nor an illusion. It is the palpable vibration of feeling cherished in your own skin. When a woman catches her reflection in the golden morning light and smiles, that is the Lumière glow."
+      </p>
+      <div class="founder-profile">
+        <img src="https://picsum.photos/120/120?random=82" alt="Camille Laurent" class="founder-avatar">
+        <div class="founder-info">
+          <h4>Camille Laurent</h4>
+          <p>Founder &amp; Creative Director</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Milestones Timeline -->
+  <section class="timeline-section">
+    <div class="timeline-header">
+      <span style="color: var(--secondary); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.2em;">Chronicle</span>
+      <h2>Our Glowing Journey</h2>
+    </div>
+
+    <div class="timeline-wrapper">
+      <div class="timeline-line"></div>
+
+      <!-- 2021 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2021</div>
+          <h3 class="timeline-title">The Grasse Botanical Dream</h3>
+          <p class="timeline-desc">First prototype of Rose Glow Serum formulated using organic damask rose distillates and bio-fermented hyaluronic acid.</p>
+        </div>
+      </div>
+
+      <!-- 2023 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2023</div>
+          <h3 class="timeline-title">Clean Beauty Revolution</h3>
+          <p class="timeline-desc">Expanded into Velvet Matte Lipsticks and Golden Hour Highlighters, earning our Leaping Bunny Cruelty-Free certification.</p>
+        </div>
+      </div>
+
+      <!-- 2025 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2025</div>
+          <h3 class="timeline-title">Paris Fashion Week Presence</h3>
+          <p class="timeline-desc">Selected as the exclusive runway skincare partner for leading haute couture fashion houses in Paris and Milan.</p>
+        </div>
+      </div>
+
+      <!-- 2026 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2026</div>
+          <h3 class="timeline-title">Zero-Carbon Luxury Packaging</h3>
+          <p class="timeline-desc">Pioneered 100% infinitely recyclable flacons and refillable lipstick cartridges, saving 40 tons of virgin plastic annually.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section (3D Icon Cards with Tilt) -->
+  <section class="values-section">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto 3.5rem;">
+      <span style="color: var(--secondary); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.2em;">Core Pillars</span>
+      <h2 style="font-size: clamp(2rem, 3.5vw, 2.6rem); color: var(--dark);">Guiding Principles</h2>
+    </div>
+
+    <div class="values-grid">
+      <!-- 1 -->
+      <div class="value-card" data-tilt data-tilt-max="12" data-tilt-glare data-tilt-max-glare="0.2">
+        <div class="value-icon-box"><i class="fas fa-leaf"></i></div>
+        <h3 class="value-title">Radical Sustainability</h3>
+        <p class="value-desc">Every vessel is formed from weighted French glass and FSC-certified unbleached seed paper, created to endure gracefully.</p>
+      </div>
+
+      <!-- 2 -->
+      <div class="value-card" data-tilt data-tilt-max="12" data-tilt-glare data-tilt-max-glare="0.2">
+        <div class="value-icon-box"><i class="fas fa-paw"></i></div>
+        <h3 class="value-title">100% Cruelty-Free</h3>
+        <p class="value-desc">We never test on animals, nor do we partner with ingredient suppliers who do. Gentle kindness is our true standard.</p>
+      </div>
+
+      <!-- 3 -->
+      <div class="value-card" data-tilt data-tilt-max="12" data-tilt-glare data-tilt-max-glare="0.2">
+        <div class="value-icon-box"><i class="fas fa-venus"></i></div>
+        <h3 class="value-title">Universal Inclusivity</h3>
+        <p class="value-desc">Formulations engineered to flatter every undertone, celebrate all ages from 16 to 80, and enhance natural skin texture.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Faces Section -->
+  <section class="team-section">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto 3.5rem;">
+      <span style="color: var(--secondary); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.2em;">The Visionaries</span>
+      <h2 style="font-size: clamp(2rem, 3.5vw, 2.6rem); color: var(--dark);">Minds Behind The Glow</h2>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="https://picsum.photos/400/450?random=83" alt="Camille Laurent" class="team-avatar">
+        <div class="team-details">
+          <h4 class="team-name">Camille Laurent</h4>
+          <span class="team-role">Founder &amp; Creative Director</span>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <img src="https://picsum.photos/400/450?random=84" alt="Dr. Althea Moreau" class="team-avatar">
+        <div class="team-details">
+          <h4 class="team-name">Dr. Althea Moreau</h4>
+          <span class="team-role">Head of Cosmetic Chemistry</span>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <img src="https://picsum.photos/400/450?random=85" alt="Sylvie Renaud" class="team-avatar">
+        <div class="team-details">
+          <h4 class="team-name">Sylvie Renaud</h4>
+          <span class="team-role">Master Perfumer (Nose)</span>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <img src="https://picsum.photos/400/450?random=86" alt="Kavya Sharma" class="team-avatar">
+        <div class="team-details">
+          <h4 class="team-name">Kavya Sharma</h4>
+          <span class="team-role">Global Inclusivity Advocate</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h3>Your Glow Bag (<span id="cart-item-count">0</span>)</h3>
+      <button class="cart-close" id="cart-close-btn">&times;</button>
+    </div>
+    <div class="cart-items" id="cart-items-container"></div>
+    <div class="cart-footer">
+      <div class="cart-subtotal">
+        <span>Subtotal:</span>
+        <span id="cart-subtotal-val">₹0</span>
+      </div>
+      <button class="checkout-btn" onclick="triggerCheckout()">Proceed to Checkout ✨</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-msg" id="toast">
+    <i class="fas fa-check-circle" style="color: var(--gold);"></i>
+    <span id="toast-text"></span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; gap: 1rem;">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-text">LUMIÈRE<span style="color:var(--gold);">.</span></span>
+      </a>
+      <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">
+        &copy; 2026 Lumière Beauty. Beauty That Moves You.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+  <script>
+    // Loader
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      setTimeout(() => {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.style.visibility = 'hidden', 500);
+      }, 300);
+    });
+
+    // Cart Logic
+    let cart = JSON.parse(localStorage.getItem('lumiere_cart')) || [];
+
+    function updateCartUI() {
+      const counter = document.getElementById('cart-counter');
+      const drawerCount = document.getElementById('cart-item-count');
+      const container = document.getElementById('cart-items-container');
+      const subtotalVal = document.getElementById('cart-subtotal-val');
+
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      counter.textContent = totalItems;
+      drawerCount.textContent = totalItems;
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; color: #999; margin: auto; padding: 2rem;">
+            <i class="fas fa-shopping-bag" style="font-size: 2.5rem; color: #E0D0D5; margin-bottom: 1rem; display: block;"></i>
+            Your shopping bag is empty.
+          </div>
+        `;
+        subtotalVal.textContent = '₹0';
+        return;
+      }
+
+      let subtotal = 0;
+      container.innerHTML = cart.map((item, idx) => {
+        subtotal += item.price * item.quantity;
+        return `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.title}" class="cart-item-img">
+            <div class="cart-item-info">
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-price">₹${item.price} x ${item.quantity}</div>
+            </div>
+            <button class="cart-item-remove" onclick="removeFromCart(${idx})" title="Remove">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      subtotalVal.textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+      localStorage.setItem('lumiere_cart', JSON.stringify(cart));
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    const openCartBtn = document.getElementById('open-cart-btn');
+    const cartCloseBtn = document.getElementById('cart-close-btn');
+    const cartDrawer = document.getElementById('cart-drawer');
+    const drawerOverlay = document.getElementById('drawer-overlay');
+
+    openCartBtn.addEventListener('click', () => {
+      cartDrawer.classList.add('open');
+      drawerOverlay.classList.add('active');
+    });
+
+    cartCloseBtn.addEventListener('click', () => {
+      cartDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('active');
+    });
+
+    drawerOverlay.addEventListener('click', () => {
+      cartDrawer.classList.remove('open');
+      document.getElementById('mobile-drawer').classList.remove('open');
+      drawerOverlay.classList.remove('active');
+    });
+
+    // Mobile Drawer
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-drawer').classList.add('open');
+      drawerOverlay.classList.add('active');
+    });
+
+    document.getElementById('drawer-close-btn').addEventListener('click', () => {
+      document.getElementById('mobile-drawer').classList.remove('open');
+      drawerOverlay.classList.remove('active');
+    });
+
+    function triggerCheckout() {
+      if (cart.length === 0) return;
+      alert('Checkout demo complete!');
+      cart = [];
+      updateCartUI();
+      cartDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('active');
+    }
+
+    updateCartUI();
+
+    // ---------------------------------------------
+    // Cinematic Ambient Canvas Animation (Silky Rose Liquid Video Effect)
+    // ---------------------------------------------
+    const canvas = document.getElementById('ambient-video-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    let time = 0;
+    function drawAmbientVideo() {
+      time += 0.008;
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // Deep wine / berry gradient
+      const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+      bgGrad.addColorStop(0, '#1A0A0F');
+      bgGrad.addColorStop(0.5, '#3A0C22');
+      bgGrad.addColorStop(1, '#571333');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Flowing glowing waves
+      for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        const waveGrad = ctx.createLinearGradient(0, 0, w, 0);
+        waveGrad.addColorStop(0, 'rgba(255, 107, 157, 0.15)');
+        waveGrad.addColorStop(0.5, 'rgba(212, 175, 55, 0.25)');
+        waveGrad.addColorStop(1, 'rgba(201, 24, 74, 0.1)');
+        ctx.fillStyle = waveGrad;
+
+        ctx.moveTo(0, h);
+        for (let x = 0; x <= w; x += 25) {
+          const y = Math.sin(x * 0.003 + time + i) * 80 + Math.cos(x * 0.002 - time * 0.7) * 40 + h * (0.55 + i * 0.12);
+          ctx.lineTo(x, y);
+        }
+        ctx.lineTo(w, h);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      requestAnimationFrame(drawAmbientVideo);
+    }
+    drawAmbientVideo();
+  </script>
+</body>
+</html>

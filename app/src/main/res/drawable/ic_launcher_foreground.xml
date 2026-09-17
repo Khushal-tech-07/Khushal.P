@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Center glowing perfume/cosmetics silhouette -->
+    <!-- Bottle Cap -->
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M48,28h12v7h-12z" />
+    <!-- Atomizer collar -->
+    <path
+        android:fillColor="#FFD6E0"
+        android:pathData="M44,35h20v4h-20z" />
+    <!-- Perfume Bottle Body -->
+    <path
+        android:fillColor="#FFF5F7"
+        android:pathData="M37,42h34c2.2,0 4,1.8 4,4v28c0,4.4 -3.6,8 -8,8H41c-4.4,0 -8,-3.6 -8,-8V46c0,-2.2 1.8,-4 4,-4z" />
+    <!-- Inner faceted perfume gem -->
+    <path
+        android:fillColor="#FF6B9D"
+        android:pathData="M42,47h24v22c0,3.3 -2.7,6 -6,6H48c-3.3,0 -6,-2.7 -6,-6V47z" />
+    <!-- Gold emblem accent -->
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M54,52l3.5,6 -3.5,6 -3.5,-6z" />
+    <!-- Sparkles -->
+    <path
+        android:fillColor="#FFD6E0"
+        android:pathData="M76,28l1.5,4.5 4.5,1.5 -4.5,1.5 -1.5,4.5 -1.5,-4.5 -4.5,-1.5 4.5,-1.5z" />
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M30,36l1,3 3,1 -3,1 -1,3 -1,-3 -3,-1 3,-1z" />
+    <path
+        android:fillColor="#FFF5F7"
+        android:pathData="M74,68l1,3 3,1 -3,1 -1,3 -1,-3 -3,-1 3,-1z" />
+</vector>

@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Product Details — Lumière Beauty</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary: #FF6B9D;
+      --secondary: #C9184A;
+      --accent: #FFD6E0;
+      --gold: #D4AF37;
+      --gold-light: #F4E295;
+      --dark: #1A0A0F;
+      --dark-card: #250E17;
+      --light: #FFF5F7;
+      --text: #2D2D2D;
+      --text-muted: #8E7A82;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 107, 157, 0.2);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-pill: 50px;
+      --transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--light);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+      padding-bottom: 70px; /* space for mobile sticky bar */
+    }
+
+    h1, h2, h3, h4, .brand-font {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Loader */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, var(--dark), #330B1C);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .loader-emblem {
+      width: 60px;
+      height: 60px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: spinBorder 4s linear infinite;
+    }
+
+    @keyframes spinBorder {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Header */
+    header.main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 0.9rem 5%;
+      background: rgba(26, 10, 15, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: #FFF;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #FFF, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.82);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .nav-link:hover, .nav-link.active { color: #FFF; }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFF;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .icon-btn:hover {
+      background: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--secondary);
+      color: #FFF;
+      font-size: 0.65rem;
+      font-weight: 700;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--dark);
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: #FFF;
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 320px;
+      height: 100vh;
+      background: var(--dark);
+      z-index: 2000;
+      padding: 2.5rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      border-left: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .mobile-drawer.open { right: 0; }
+
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .drawer-overlay.active { opacity: 1; pointer-events: all; }
+
+    .drawer-close {
+      align-self: flex-end;
+      background: none;
+      border: none;
+      color: #FFF;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .mobile-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .mobile-nav-link {
+      color: #FFF;
+      text-decoration: none;
+      font-size: 1.3rem;
+      font-family: 'Playfair Display', serif;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb-nav {
+      max-width: 1300px;
+      margin: 85px auto 0;
+      padding: 1.2rem 5% 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .breadcrumb-nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .breadcrumb-nav a:hover {
+      color: var(--secondary);
+    }
+
+    /* Product Main Section */
+    .product-detail-container {
+      max-width: 1300px;
+      margin: 1.5rem auto 4rem;
+      padding: 0 5%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    /* 3D Visualizer & Gallery Left Column */
+    .visualizer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: sticky;
+      top: 90px;
+    }
+
+    .viewer-card {
+      background: radial-gradient(circle at 50% 50%, #2A0917 0%, var(--dark) 100%);
+      border-radius: var(--radius-md);
+      position: relative;
+      height: 480px;
+      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(26, 10, 15, 0.15);
+      border: 1px solid rgba(255, 107, 157, 0.25);
+    }
+
+    #product-3d-canvas {
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+    }
+
+    #product-3d-canvas:active {
+      cursor: grabbing;
+    }
+
+    .view-mode-toggle {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .mode-btn {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFF;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .mode-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(255, 107, 157, 0.5);
+    }
+
+    .drag-hint-badge {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(26, 10, 15, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--gold-light);
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+      backdrop-filter: blur(6px);
+    }
+
+    /* Thumbnail Gallery */
+    .thumbnails-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .thumb-item {
+      width: 75px;
+      height: 75px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: var(--transition);
+      background: #FFF;
+    }
+
+    .thumb-item.active, .thumb-item:hover {
+      border-color: var(--secondary);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(201, 24, 74, 0.2);
+    }
+
+    .thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Product Information Right Column */
+    .info-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .product-tag-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-pill {
+      background: rgba(201, 24, 74, 0.12);
+      color: var(--secondary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: var(--radius-pill);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .stock-pill {
+      color: #2D9B62;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-title {
+      font-size: clamp(2rem, 3.5vw, 2.7rem);
+      line-height: 1.15;
+      color: var(--dark);
+    }
+
+    .detail-rating-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stars-group {
+      color: var(--gold);
+      font-size: 0.95rem;
+    }
+
+    .rating-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .detail-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+    }
+
+    .main-price {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .original-price {
+      font-size: 1.2rem;
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .tax-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .detail-short-desc {
+      font-size: 1.05rem;
+      color: #4A4A4A;
+      line-height: 1.7;
+    }
+
+    /* Shade Selector */
+    .shade-selector-group {
+      background: #FFF;
+      padding: 1.4rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+    }
+
+    .shade-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.9rem;
+      font-size: 0.9rem;
+    }
+
+    .selected-shade-name {
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .swatches-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .swatch-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      border: 2px solid #FFF;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .swatch-circle.active {
+      transform: scale(1.15);
+      box-shadow: 0 0 0 3px var(--secondary);
+    }
+
+    /* Quantity & Add to Bag */
+    .action-row {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .qty-selector {
+      display: flex;
+      align-items: center;
+      background: #FFF;
+      border: 1px solid #E6D0D8;
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+    }
+
+    .qty-btn {
+      width: 42px;
+      height: 48px;
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      color: var(--dark);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
+    }
+
+    .qty-btn:hover {
+      background: #FFF0F4;
+      color: var(--secondary);
+    }
+
+    .qty-value {
+      width: 44px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--dark);
+    }
+
+    .add-bag-primary-btn {
+      flex-grow: 1;
+      min-width: 220px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #FFF;
+      border: none;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 8px 25px rgba(255, 107, 157, 0.35);
+    }
+
+    .add-bag-primary-btn:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 30px rgba(255, 107, 157, 0.55);
+    }
+
+    .wishlist-toggle-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #FFF;
+      border: 1px solid #E6D0D8;
+      color: var(--secondary);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .wishlist-toggle-btn:hover {
+      background: #FFF0F4;
+      border-color: var(--secondary);
+    }
+
+    /* Product Highlights Strip */
+    .product-perks {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #F0DFE5;
+    }
+
+    .perk-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .perk-item i {
+      color: var(--gold);
+      font-size: 1rem;
+    }
+
+    /* Tabs Section */
+    .tabs-section {
+      max-width: 1300px;
+      margin: 4rem auto;
+      padding: 0 5%;
+    }
+
+    .tabs-nav {
+      display: flex;
+      gap: 2rem;
+      border-bottom: 1px solid #E8D8DE;
+      margin-bottom: 2rem;
+      overflow-x: auto;
+    }
+
+    .tab-nav-btn {
+      background: none;
+      border: none;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      padding: 0.8rem 0;
+      color: var(--text-muted);
+      cursor: pointer;
+      position: relative;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+
+    .tab-nav-btn.active {
+      color: var(--secondary);
+      font-weight: 700;
+    }
+
+    .tab-nav-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 3px;
+    }
+
+    .tab-content {
+      display: none;
+      background: #FFF;
+      border-radius: var(--radius-md);
+      padding: 2.2rem;
+      border: 1px solid var(--glass-border);
+      line-height: 1.8;
+      color: #444;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Related Products Carousel */
+    .related-section {
+      max-width: 1300px;
+      margin: 4rem auto 6rem;
+      padding: 0 5%;
+    }
+
+    .related-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    /* Mobile Sticky Bottom Bar */
+    .mobile-sticky-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #FFF;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+      padding: 10px 5%;
+      z-index: 1500;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #F0DFE5;
+    }
+
+    .sticky-price-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sticky-price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .sticky-title {
+      font-size: 0.8rem;
+      color: var(--dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 150px;
+    }
+
+    .sticky-add-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #FFF;
+      border: none;
+      padding: 10px 22px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    /* Cart Slide-out Drawer */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 100%;
+      max-width: 400px;
+      height: 100vh;
+      background: #FFF;
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.2);
+      z-index: 2500;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .cart-drawer.open { right: 0; }
+    .cart-header { padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; background: var(--light); }
+    .cart-header h3 { font-size: 1.3rem; color: var(--dark); }
+    .cart-close { background: none; border: none; font-size: 1.2rem; color: var(--text); cursor: pointer; }
+    .cart-items { flex-grow: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem; }
+    .cart-item { display: flex; gap: 12px; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid #F0F0F0; }
+    .cart-item-img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+    .cart-item-info { flex-grow: 1; }
+    .cart-item-title { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
+    .cart-item-price { color: var(--secondary); font-weight: 700; font-size: 0.88rem; }
+    .cart-item-remove { background: none; border: none; color: #999; cursor: pointer; }
+    .cart-footer { padding: 1.5rem; border-top: 1px solid rgba(0,0,0,0.08); background: var(--light); }
+    .cart-subtotal { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--dark); }
+    .checkout-btn { width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #FFF; border: none; border-radius: var(--radius-pill); font-weight: 700; font-size: 1rem; cursor: pointer; }
+
+    /* Toast */
+    .toast-msg {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(26, 10, 15, 0.92);
+      color: #FFF;
+      border: 1px solid var(--primary);
+      padding: 12px 24px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      transition: transform 0.4s ease;
+      pointer-events: none;
+    }
+    .toast-msg.show { transform: translateX(-50%) translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .product-detail-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .visualizer-col {
+        position: static;
+      }
+      .mobile-sticky-bar {
+        display: flex;
+      }
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div id="loader">
+    <div class="loader-emblem"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-text">LUMIÈRE<span style="color:var(--gold);">.</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="products.html" class="nav-link">Shop</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="open-cart-btn" title="Shopping Bag">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-badge" id="cart-counter">0</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+  <div class="mobile-drawer" id="mobile-drawer">
+    <button class="drawer-close" id="drawer-close-btn">&times;</button>
+    <a href="index.html" class="brand-logo">
+      <span class="logo-text">LUMIÈRE<span style="color:var(--gold);">.</span></span>
+    </a>
+    <ul class="mobile-nav-list">
+      <li><a href="index.html" class="mobile-nav-link">Home <i class="fas fa-chevron-right"></i></a></li>
+      <li><a href="products.html" class="mobile-nav-link">Shop Collection <i class="fas fa-chevron-right"></i></a></li>
+      <li><a href="about.html" class="mobile-nav-link">Our Story <i class="fas fa-chevron-right"></i></a></li>
+      <li><a href="contact.html" class="mobile-nav-link">Contact Us <i class="fas fa-chevron-right"></i></a></li>
+    </ul>
+  </div>
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumb-nav">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    <a href="products.html">Shop</a>
+    <span>/</span>
+    <span id="breadcrumb-product-name" style="color: var(--dark); font-weight: 500;">Rose Glow Serum</span>
+  </div>
+
+  <!-- Product Detail Section -->
+  <div class="product-detail-container">
+    <!-- Left Column: 3D Visualizer & Thumbnails -->
+    <div class="visualizer-col">
+      <div class="viewer-card">
+        <div class="view-mode-toggle">
+          <button class="mode-btn active" id="btn-mode-3d"><i class="fas fa-cube"></i> 3D Viewer</button>
+          <button class="mode-btn" id="btn-mode-img"><i class="fas fa-image"></i> Editorial Photo</button>
+        </div>
+
+        <!-- 3D Canvas -->
+        <canvas id="product-3d-canvas"></canvas>
+
+        <!-- Static Image Replacement (hidden by default) -->
+        <img id="photo-viewer-img" src="" alt="Product" style="display: none; width: 100%; height: 100%; object-fit: cover;">
+
+        <div class="drag-hint-badge" id="drag-hint">
+          <i class="fas fa-arrows-rotate"></i> Drag to rotate 360°
+        </div>
+      </div>
+
+      <!-- Thumbnails -->
+      <div class="thumbnails-row">
+        <div class="thumb-item active" onclick="switchThumbView('3d', this)">
+          <div style="background: var(--dark); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--gold);">
+            <i class="fas fa-cube" style="font-size: 1.5rem;"></i>
+          </div>
+        </div>
+        <div class="thumb-item" onclick="switchThumbView('img1', this)">
+          <img id="thumb-img-1" src="" alt="Thumbnail 1">
+        </div>
+        <div class="thumb-item" onclick="switchThumbView('img2', this)">
+          <img id="thumb-img-2" src="" alt="Thumbnail 2">
+        </div>
+        <div class="thumb-item" onclick="switchThumbView('img3', this)">
+          <img id="thumb-img-3" src="" alt="Thumbnail 3">
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Details & Actions -->
+    <div class="info-col">
+      <div class="product-tag-row">
+        <span class="badge-pill" id="detail-badge">Iconic Bestseller</span>
+        <span class="stock-pill"><i class="fas fa-circle-check"></i> In Stock &amp; Ready to Ship</span>
+      </div>
+
+      <h1 class="detail-title" id="detail-title">Rose Glow Serum</h1>
+
+      <div class="detail-rating-row">
+        <div class="stars-group">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+        <span class="rating-text" id="detail-rating-label">4.9 / 5.0 (2,480 Verified Buyer Reviews)</span>
+      </div>
+
+      <div class="detail-price-row">
+        <span class="main-price" id="detail-price">₹1,299</span>
+        <span class="original-price" id="detail-original-price">₹1,799</span>
+        <span class="tax-note">Inclusive of all luxury taxes</span>
+      </div>
+
+      <p class="detail-short-desc" id="detail-desc">
+        Infused with organic damask rose petals, triple-molecular hyaluronic acid, and micro-reflective rose gold pearls. Restores instant radiance, deep barrier bounce, and silk luminosity.
+      </p>
+
+      <!-- Shade Selector -->
+      <div class="shade-selector-group">
+        <div class="shade-header">
+          <span>Selected Shade / Finish:</span>
+          <span class="selected-shade-name" id="selected-shade-name">Rose Petal Glow</span>
+        </div>
+        <div class="swatches-row">
+          <div class="swatch-circle active" style="background: #E8A598;" onclick="selectShade('Rose Petal Glow', this)"></div>
+          <div class="swatch-circle" style="background: #C9184A;" onclick="selectShade('Velvet Berry', this)"></div>
+          <div class="swatch-circle" style="background: #D4AF37;" onclick="selectShade('Golden Champagne', this)"></div>
+          <div class="swatch-circle" style="background: #E07A5F;" onclick="selectShade('Coral Nude', this)"></div>
+          <div class="swatch-circle" style="background: #6D2E46;" onclick="selectShade('Midnight Plum', this)"></div>
+        </div>
+      </div>
+
+      <!-- Quantity + Add to Bag -->
+      <div class="action-row">
+        <div class="qty-selector">
+          <button class="qty-btn" onclick="changeQty(-1)">-</button>
+          <span class="qty-value" id="qty-val">1</span>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+
+        <button class="add-bag-primary-btn" id="add-to-bag-btn" onclick="executeAddToBag()">
+          <i class="fas fa-shopping-bag"></i> Add to Bag — <span id="btn-price-calc">₹1,299</span>
+        </button>
+
+        <button class="wishlist-toggle-btn" title="Add to Wishlist" onclick="toggleWishlist(this)">
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+
+      <!-- Perks Strip -->
+      <div class="product-perks">
+        <div class="perk-item">
+          <i class="fas fa-truck-fast"></i>
+          <span>Free Express Delivery</span>
+        </div>
+        <div class="perk-item">
+          <i class="fas fa-shield-halved"></i>
+          <span>100% Authentic Guarantee</span>
+        </div>
+        <div class="perk-item">
+          <i class="fas fa-gift"></i>
+          <span>Complimentary Luxe Samples</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs: Description | Ingredients | How to Use | Reviews -->
+  <div class="tabs-section">
+    <div class="tabs-nav">
+      <button class="tab-nav-btn active" onclick="switchTab('tab-description', this)">Description</button>
+      <button class="tab-nav-btn" onclick="switchTab('tab-ingredients', this)">Pure Ingredients</button>
+      <button class="tab-nav-btn" onclick="switchTab('tab-how-to-use', this)">How to Use</button>
+      <button class="tab-nav-btn" onclick="switchTab('tab-reviews', this)">Reviews (2,480)</button>
+    </div>
+
+    <div class="tab-content active" id="tab-description">
+      <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: var(--dark);">The Formula Architecture</h3>
+      <p style="margin-bottom: 1rem;">
+        Formulated in the heart of Provence using traditional slow-cold pressing techniques, this elixir marries centuries-old botanical wisdom with contemporary dermatological science. Each drop delivers micro-droplets of fermented damask rose water that sink effortlessly into skin cells without stickiness.
+      </p>
+      <p>
+        Enriched with niacinamide, botanical squalane, and vitamin E, it visibly calms redness, tightens porous texture, and illuminates dullness to impart an ethereal, filtered glow in natural daylight.
+      </p>
+    </div>
+
+    <div class="tab-content" id="tab-ingredients">
+      <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: var(--dark);">Botanical &amp; Active Ingredients</h3>
+      <p style="margin-bottom: 1.2rem;">
+        100% Clean • Vegan • Paraben-Free • Phthalate-Free • Cruelty-Free
+      </p>
+      <ul style="padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.6rem;">
+        <li><strong>Damask Rose Floral Distillate:</strong> Soothes, hydrates, and gently tones skin cells.</li>
+        <li><strong>Triple Molecular Hyaluronic Acid:</strong> Deeply penetrates epidermis layers for sustained 72-hour moisture lock.</li>
+        <li><strong>Niacinamide (5%):</strong> Visibly refines pores and evening out post-acne pigmentation.</li>
+        <li><strong>Camellia &amp; Jojoba Seed Oils:</strong> Strengthens lipid barrier and seals silky, weightless hydration.</li>
+        <li><strong>Micro Rose Gold Minerals:</strong> Ethically sourced mica creating a radiant, multi-dimensional luster.</li>
+      </ul>
+    </div>
+
+    <div class="tab-content" id="tab-how-to-use">
+      <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: var(--dark);">Ritual of Application</h3>
+      <ol style="padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.8rem;">
+        <li><strong>Cleanse:</strong> Start with a fresh, damp face after your morning or evening cleanse.</li>
+        <li><strong>Dispense:</strong> Release 3 to 4 drops into your palms using the gold dropper.</li>
+        <li><strong>Warm &amp; Inhale:</strong> Gently press palms together to activate the botanical terpenes and inhale the delicate floral fragrance.</li>
+        <li><strong>Press &amp; Glide:</strong> Press into cheeks, forehead, chin, and neck using upwards lymphatic drainage motions until fully absorbed.</li>
+        <li><strong>Follow:</strong> Layer with Hydra Bloom Moisturizer or wear alone under makeup for an effortless lit-from-within canvas.</li>
+      </ol>
+    </div>
+
+    <div class="tab-content" id="tab-reviews">
+      <h3 style="font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--dark);">Customer Testimonials</h3>
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div style="padding-bottom: 1.2rem; border-bottom: 1px solid #F0DFE5;">
+          <div style="color: var(--gold); margin-bottom: 0.3rem;">★★★★★</div>
+          <h4 style="font-size: 1.1rem; color: var(--dark);">Priya S. — <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">Verified Buyer</span></h4>
+          <p style="font-size: 0.95rem; color: #555; margin-top: 0.4rem;">"This serum changed my skin completely! My face looks like it caught golden hour sunshine even after an 8-hour workday."</p>
+        </div>
+        <div style="padding-bottom: 1.2rem; border-bottom: 1px solid #F0DFE5;">
+          <div style="color: var(--gold); margin-bottom: 0.3rem;">★★★★★</div>
+          <h4 style="font-size: 1.1rem; color: var(--dark);">Ananya R. — <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">Verified Buyer</span></h4>
+          <p style="font-size: 0.95rem; color: #555; margin-top: 0.4rem;">"The texture is pure magic. It absorbs in seconds and leaves such a gorgeous velvet glow. I've already ordered a refill!"</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Products -->
+  <div class="related-section">
+    <div class="related-header">
+      <h2 style="font-size: 1.8rem; color: var(--dark);">Complete The Ritual</h2>
+      <a href="products.html" style="color: var(--secondary); font-weight: 600; text-decoration: none;">View All <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="related-grid" id="related-grid">
+      <!-- Related items populated by JS -->
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Bar -->
+  <div class="mobile-sticky-bar">
+    <div class="sticky-price-block">
+      <span class="sticky-price" id="mobile-sticky-price">₹1,299</span>
+      <span class="sticky-title" id="mobile-sticky-title">Rose Glow Serum</span>
+    </div>
+    <button class="sticky-add-btn" onclick="executeAddToBag()">
+      <i class="fas fa-shopping-bag"></i> Add to Bag
+    </button>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h3>Your Glow Bag (<span id="cart-item-count">0</span>)</h3>
+      <button class="cart-close" id="cart-close-btn">&times;</button>
+    </div>
+    <div class="cart-items" id="cart-items-container"></div>
+    <div class="cart-footer">
+      <div class="cart-subtotal">
+        <span>Subtotal:</span>
+        <span id="cart-subtotal-val">₹0</span>
+      </div>
+      <button class="checkout-btn" onclick="triggerCheckout()">Proceed to Checkout ✨</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-msg" id="toast">
+    <i class="fas fa-check-circle" style="color: var(--gold);"></i>
+    <span id="toast-text"></span>
+  </div>
+
+  <!-- Footer -->
+  <footer style="background: var(--dark); color: #FFF; padding: 3rem 5%; text-align: center;">
+    <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">
+      &copy; 2026 Lumière Beauty. All Rights Reserved. Luxury • Feminine • Glowing.
+    </p>
+  </footer>
+
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script>
+    // ---------------------------------------------
+    // Product Database
+    // ---------------------------------------------
+    const productsDB = {
+      1: {
+        title: "Rose Glow Serum",
+        price: 1299,
+        originalPrice: 1799,
+        rating: 4.9,
+        reviews: 2480,
+        badge: "Iconic Bestseller",
+        desc: "Infused with organic damask rose petals, triple-molecular hyaluronic acid, and micro-reflective rose gold pearls. Restores instant radiance, deep barrier bounce, and silk luminosity.",
+        image: "https://picsum.photos/400/500?random=1",
+        shades: ["Rose Petal Glow", "Velvet Berry", "Golden Champagne", "Coral Nude"]
+      },
+      2: {
+        title: "Velvet Matte Lipstick",
+        price: 699,
+        originalPrice: 999,
+        rating: 4.8,
+        reviews: 1930,
+        badge: "Trending Worldwide",
+        desc: "A weightless luxury lipstick delivering saturated cushion color with 12-hour comfortable hydration. Infused with soothing camellia oil and pure pigments.",
+        image: "https://picsum.photos/400/500?random=2",
+        shades: ["French Rose", "Scarlet Velvet", "Bare Nude", "Cranberry Silk"]
+      },
+      3: {
+        title: "Hydra Bloom Moisturizer",
+        price: 999,
+        originalPrice: 1399,
+        rating: 4.7,
+        reviews: 850,
+        badge: "Staff Favorite",
+        desc: "A whipped water-cream packed with peptides and snow mushroom extract that provides 72 hours of uninterrupted moisture and petal-soft plumping.",
+        image: "https://picsum.photos/400/500?random=3",
+        shades: ["Universal Moisture"]
+      },
+      4: {
+        title: "Golden Hour Highlighter",
+        price: 849,
+        originalPrice: 1199,
+        rating: 5.0,
+        reviews: 3110,
+        badge: "Limited Edition",
+        desc: "Silk-baked illuminator infused with pearlescent pigments that capture candlelight and golden hour sun. Velvety smooth with zero glitter fallout.",
+        image: "https://picsum.photos/400/500?random=4",
+        shades: ["Sun Drenched", "Rose Gold Halo", "Champagne Mist"]
+      },
+      5: {
+        title: "Petal Soft Foundation",
+        price: 1199,
+        originalPrice: 1699,
+        rating: 4.8,
+        reviews: 1420,
+        badge: "Award Winner",
+        desc: "Second-skin breathable liquid foundation with light-refracting minerals. Delivers natural radiant finish with buildable medium coverage.",
+        image: "https://picsum.photos/400/500?random=5",
+        shades: ["Ivory Rose", "Warm Bisque", "Caramel Glow", "Golden Chestnut"]
+      },
+      6: {
+        title: "Midnight Perfume Elixir",
+        price: 2499,
+        originalPrice: 3200,
+        rating: 4.9,
+        reviews: 980,
+        badge: "Haute Luxe",
+        desc: "Sensual, mysterious, and unforgettable. Features notes of French iris, black currant, warm bourbon vanilla, and golden cedarwood.",
+        image: "https://picsum.photos/400/500?random=6",
+        shades: ["50ml Extrait", "100ml Flacon"]
+      }
+    };
+
+    // Parse URL parameter ?id=
+    const params = new URLSearchParams(window.location.search);
+    const productId = parseInt(params.get('id')) || 1;
+    const currentProduct = productsDB[productId] || productsDB[1];
+
+    let currentQty = 1;
+    let selectedShade = currentProduct.shades ? currentProduct.shades[0] : "Universal Glow";
+
+    // Populate Page Elements
+    document.getElementById('breadcrumb-product-name').textContent = currentProduct.title;
+    document.getElementById('detail-title').textContent = currentProduct.title;
+    document.getElementById('detail-badge').textContent = currentProduct.badge;
+    document.getElementById('detail-desc').textContent = currentProduct.desc;
+    document.getElementById('detail-price').textContent = `₹${currentProduct.price.toLocaleString('en-IN')}`;
+    document.getElementById('detail-originalPrice' in currentProduct ? 'detail-original-price' : 'detail-price').textContent = `₹${currentProduct.originalPrice.toLocaleString('en-IN')}`;
+    document.getElementById('btn-price-calc').textContent = `₹${(currentProduct.price * currentQty).toLocaleString('en-IN')}`;
+    document.getElementById('mobile-sticky-price').textContent = `₹${currentProduct.price.toLocaleString('en-IN')}`;
+    document.getElementById('mobile-sticky-title').textContent = currentProduct.title;
+    document.getElementById('selected-shade-name').textContent = selectedShade;
+
+    // Thumbnails
+    document.getElementById('thumb-img-1').src = currentProduct.image;
+    document.getElementById('thumb-img-2').src = `https://picsum.photos/400/500?random=${productId + 30}`;
+    document.getElementById('thumb-img-3').src = `https://picsum.photos/400/500?random=${productId + 50}`;
+    document.getElementById('photo-viewer-img').src = currentProduct.image;
+
+    // Quantity Logic
+    function changeQty(delta) {
+      currentQty = Math.max(1, currentQty + delta);
+      document.getElementById('qty-val').textContent = currentQty;
+      const total = currentProduct.price * currentQty;
+      document.getElementById('btn-price-calc').textContent = `₹${total.toLocaleString('en-IN')}`;
+    }
+
+    // Shade Selection
+    function selectShade(shade, el) {
+      selectedShade = shade;
+      document.getElementById('selected-shade-name').textContent = shade;
+      document.querySelectorAll('.swatch-circle').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // Tab Switching
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-nav-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    // Viewer Mode Switch
+    const canvas3d = document.getElementById('product-3d-canvas');
+    const photoImg = document.getElementById('photo-viewer-img');
+    const btnMode3d = document.getElementById('btn-mode-3d');
+    const btnModeImg = document.getElementById('btn-mode-img');
+    const dragHint = document.getElementById('drag-hint');
+
+    function setViewMode(mode) {
+      if (mode === '3d') {
+        canvas3d.style.display = 'block';
+        photoImg.style.display = 'none';
+        btnMode3d.classList.add('active');
+        btnModeImg.classList.remove('active');
+        dragHint.style.display = 'flex';
+      } else {
+        canvas3d.style.display = 'none';
+        photoImg.style.display = 'block';
+        btnModeImg.classList.add('active');
+        btnMode3d.classList.remove('active');
+        dragHint.style.display = 'none';
+      }
+    }
+
+    btnMode3d.addEventListener('click', () => setViewMode('3d'));
+    btnModeImg.addEventListener('click', () => setViewMode('img'));
+
+    function switchThumbView(type, el) {
+      document.querySelectorAll('.thumb-item').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+
+      if (type === '3d') {
+        setViewMode('3d');
+      } else {
+        const img = el.querySelector('img');
+        if (img) photoImg.src = img.src;
+        setViewMode('img');
+      }
+    }
+
+    // Populate Related Products
+    const relatedContainer = document.getElementById('related-grid');
+    const otherProducts = Object.keys(productsDB).filter(k => parseInt(k) !== productId).slice(0, 3);
+    relatedContainer.innerHTML = otherProducts.map(k => {
+      const p = productsDB[k];
+      return `
+        <div style="background: #FFF; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,107,157,0.15); box-shadow: 0 10px 25px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+          <a href="product-detail.html?id=${k}" style="height: 220px; overflow: hidden; display: block;">
+            <img src="${p.image}" alt="${p.title}" style="width: 100%; height: 100%; object-fit: cover;">
+          </a>
+          <div style="padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1;">
+            <h4 style="font-size: 1.05rem; margin-bottom: 0.4rem;"><a href="product-detail.html?id=${k}" style="color: var(--dark); text-decoration: none;">${p.title}</a></h4>
+            <div style="color: var(--secondary); font-weight: 700; font-size: 1.1rem; margin-top: auto;">₹${p.price.toLocaleString('en-IN')}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Loader
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      setTimeout(() => {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.style.visibility = 'hidden', 500);
+      }, 300);
+    });
+
+    // ---------------------------------------------
+    // Cart Logic
+    // ---------------------------------------------
+    let cart = JSON.parse(localStorage.getItem('lumiere_cart')) || [];
+
+    function updateCartUI() {
+      const counter = document.getElementById('cart-counter');
+      const drawerCount = document.getElementById('cart-item-count');
+      const container = document.getElementById('cart-items-container');
+      const subtotalVal = document.getElementById('cart-subtotal-val');
+
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      counter.textContent = totalItems;
+      drawerCount.textContent = totalItems;
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; color: #999; margin: auto; padding: 2rem;">
+            <i class="fas fa-shopping-bag" style="font-size: 2.5rem; color: #E0D0D5; margin-bottom: 1rem; display: block;"></i>
+            Your shopping bag is empty.
+          </div>
+        `;
+        subtotalVal.textContent = '₹0';
+        return;
+      }
+
+      let subtotal = 0;
+      container.innerHTML = cart.map((item, idx) => {
+        subtotal += item.price * item.quantity;
+        return `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.title}" class="cart-item-img">
+            <div class="cart-item-info">
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-price">₹${item.price} x ${item.quantity}</div>
+            </div>
+            <button class="cart-item-remove" onclick="removeFromCart(${idx})" title="Remove">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      subtotalVal.textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+      localStorage.setItem('lumiere_cart', JSON.stringify(cart));
+    }
+
+    function executeAddToBag() {
+      const titleWithShade = `${currentProduct.title} (${selectedShade})`;
+      const existing = cart.find(item => item.title === titleWithShade);
+      if (existing) {
+        existing.quantity += currentQty;
+      } else {
+        cart.push({
+          title: titleWithShade,
+          price: currentProduct.price,
+          image: currentProduct.image,
+          quantity: currentQty
+        });
+      }
+      updateCartUI();
+      showToast(`Added ${currentQty}x "${currentProduct.title}" to bag!`);
+      openCartDrawer();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+      showToast('Item removed from your bag');
+    }
+
+    const openCartBtn = document.getElementById('open-cart-btn');
+    const cartCloseBtn = document.getElementById('cart-close-btn');
+    const cartDrawer = document.getElementById('cart-drawer');
+    const drawerOverlay = document.getElementById('drawer-overlay');
+
+    function openCartDrawer() {
+      cartDrawer.classList.add('open');
+      drawerOverlay.classList.add('active');
+    }
+
+    function closeCartDrawer() {
+      cartDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('active');
+    }
+
+    openCartBtn.addEventListener('click', openCartDrawer);
+    cartCloseBtn.addEventListener('click', closeCartDrawer);
+    drawerOverlay.addEventListener('click', closeCartDrawer);
+
+    // Mobile Drawer
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const drawerCloseBtn = document.getElementById('drawer-close-btn');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileDrawer.classList.add('open');
+      drawerOverlay.classList.add('active');
+    });
+
+    drawerCloseBtn.addEventListener('click', () => {
+      mobileDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('active');
+    });
+
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-text').textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function toggleWishlist(btn) {
+      const icon = btn.querySelector('i');
+      if (icon.classList.contains('far')) {
+        icon.classList.replace('far', 'fas');
+        btn.style.color = 'var(--secondary)';
+        showToast('Added to Wishlist ♡');
+      } else {
+        icon.classList.replace('fas', 'far');
+        btn.style.color = '#999';
+      }
+    }
+
+    function triggerCheckout() {
+      if (cart.length === 0) {
+        showToast('Your bag is currently empty!');
+        return;
+      }
+      alert('Thank you for shopping with Lumière Beauty!');
+      cart = [];
+      updateCartUI();
+      closeCartDrawer();
+    }
+
+    updateCartUI();
+
+    // ---------------------------------------------
+    // Three.js 360° Drag-to-Rotate Viewer
+    // ---------------------------------------------
+    const viewerCard = document.querySelector('.viewer-card');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, viewerCard.clientWidth / viewerCard.clientHeight, 0.1, 50);
+    camera.position.set(0, 0, 5.5);
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvas3d,
+      antialias: true,
+      alpha: true
+    });
+    renderer.setSize(viewerCard.clientWidth, viewerCard.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Studio Lights
+    const ambientLight = new THREE.AmbientLight(0xFFD6E0, 1.3);
+    scene.add(ambientLight);
+
+    const keyLight = new THREE.PointLight(0xFFFFFF, 3, 20);
+    keyLight.position.set(4, 5, 4);
+    scene.add(keyLight);
+
+    const fillLight = new THREE.PointLight(0xD4AF37, 2.5, 20);
+    fillLight.position.set(-4, -2, 3);
+    scene.add(fillLight);
+
+    const backLight = new THREE.DirectionalLight(0xFF6B9D, 1.8);
+    backLight.position.set(0, 4, -4);
+    scene.add(backLight);
+
+    // 3D Object Group
+    const productModel = new THREE.Group();
+    scene.add(productModel);
+
+    // Materials
+    const goldMat = new THREE.MeshStandardMaterial({
+      color: 0xD4AF37,
+      metalness: 0.95,
+      roughness: 0.18
+    });
+
+    const bodyMat = new THREE.MeshStandardMaterial({
+      color: productId === 2 ? 0xC9184A : 0xFFF5F7,
+      roughness: 0.15,
+      metalness: productId === 2 ? 0.3 : 0.1,
+      transparent: true,
+      opacity: productId === 2 ? 0.95 : 0.82
+    });
+
+    const innerMat = new THREE.MeshStandardMaterial({
+      color: 0xC9184A,
+      roughness: 0.25,
+      metalness: 0.4
+    });
+
+    if (productId === 2) {
+      // Lipstick Model
+      const baseGeom = new THREE.CylinderGeometry(0.55, 0.55, 1.6, 32);
+      const baseMesh = new THREE.Mesh(baseGeom, goldMat);
+      productModel.add(baseMesh);
+
+      const collarGeom = new THREE.CylinderGeometry(0.48, 0.48, 0.6, 32);
+      const collarMesh = new THREE.Mesh(collarGeom, goldMat);
+      collarMesh.position.y = 1.0;
+      productModel.add(collarMesh);
+
+      const bulletGeom = new THREE.CylinderGeometry(0.42, 0.42, 1.1, 32);
+      const bulletMesh = new THREE.Mesh(bulletGeom, innerMat);
+      bulletMesh.position.y = 1.5;
+      bulletMesh.rotation.z = -0.15;
+      productModel.add(bulletMesh);
+      productModel.position.y = -0.5;
+    } else {
+      // Luxury Dropper Serum / Bottle Model
+      const bottleGeom = new THREE.CylinderGeometry(0.85, 0.78, 1.9, 32);
+      const bottleMesh = new THREE.Mesh(bottleGeom, bodyMat);
+      productModel.add(bottleMesh);
+
+      const liquidGeom = new THREE.CylinderGeometry(0.72, 0.66, 1.5, 32);
+      const liquidMesh = new THREE.Mesh(liquidGeom, innerMat);
+      liquidMesh.position.y = -0.15;
+      productModel.add(liquidMesh);
+
+      const collarGeom = new THREE.CylinderGeometry(0.38, 0.42, 0.4, 32);
+      const collarMesh = new THREE.Mesh(collarGeom, goldMat);
+      collarMesh.position.y = 1.15;
+      productModel.add(collarMesh);
+
+      const dropperGeom = new THREE.SphereGeometry(0.28, 24, 24);
+      const dropperMesh = new THREE.Mesh(dropperGeom, bodyMat);
+      dropperMesh.position.y = 1.55;
+      productModel.add(dropperMesh);
+      productModel.position.y = -0.2;
+    }
+
+    // Mouse & Touch Drag Rotation with Inertia
+    let isDragging = false;
+    let previousX = 0;
+    let previousY = 0;
+    let rotSpeedX = 0;
+    let rotSpeedY = 0;
+
+    canvas3d.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      previousX = e.clientX;
+      previousY = e.clientY;
+    });
+
+    window.addEventListener('mouseup', () => isDragging = false);
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const deltaX = e.clientX - previousX;
+      const deltaY = e.clientY - previousY;
+      rotSpeedY = deltaX * 0.008;
+      rotSpeedX = deltaY * 0.008;
+      previousX = e.clientX;
+      previousY = e.clientY;
+    });
+
+    // Touch
+    canvas3d.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        previousX = e.touches[0].clientX;
+        previousY = e.touches[0].clientY;
+      }
+    });
+
+    window.addEventListener('touchend', () => isDragging = false);
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging || e.touches.length !== 1) return;
+      const deltaX = e.touches[0].clientX - previousX;
+      const deltaY = e.touches[0].clientY - previousY;
+      rotSpeedY = deltaX * 0.01;
+      rotSpeedX = deltaY * 0.01;
+      previousX = e.touches[0].clientX;
+      previousY = e.touches[0].clientY;
+    });
+
+    function animate3d() {
+      requestAnimationFrame(animate3d);
+
+      if (!isDragging) {
+        // Idle gentle rotation
+        rotSpeedY += (0.005 - rotSpeedY) * 0.05;
+        rotSpeedX *= 0.92;
+      } else {
+        rotSpeedX *= 0.85;
+      }
+
+      productModel.rotation.y += rotSpeedY;
+      productModel.rotation.x += rotSpeedX;
+
+      // Keep x rotation within comfortable bounds
+      productModel.rotation.x = Math.max(-0.6, Math.min(0.6, productModel.rotation.x));
+
+      renderer.render(scene, camera);
+    }
+    animate3d();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = viewerCard.clientWidth / viewerCard.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(viewerCard.clientWidth, viewerCard.clientHeight);
+    });
+  </script>
+</body>
+</html>

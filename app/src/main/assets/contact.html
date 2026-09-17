@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Contact Concierge — Lumière Beauty</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary: #FF6B9D;
+      --secondary: #C9184A;
+      --accent: #FFD6E0;
+      --gold: #D4AF37;
+      --gold-light: #F4E295;
+      --dark: #1A0A0F;
+      --dark-card: #250E17;
+      --light: #FFF5F7;
+      --text: #2D2D2D;
+      --text-muted: #8E7A82;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 107, 157, 0.2);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-pill: 50px;
+      --transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--light);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4, .brand-font {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Loader */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, var(--dark), #330B1C);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .loader-emblem {
+      width: 60px;
+      height: 60px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: spinBorder 4s linear infinite;
+    }
+
+    @keyframes spinBorder {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Header */
+    header.main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 0.9rem 5%;
+      background: rgba(26, 10, 15, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: #FFF;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #FFF, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.82);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .nav-link:hover, .nav-link.active { color: #FFF; }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--gold));
+      border-radius: 2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFF;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .icon-btn:hover { background: var(--primary); transform: translateY(-2px); }
+
+    .cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--secondary);
+      color: #FFF;
+      font-size: 0.65rem;
+      font-weight: 700;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--dark);
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: #FFF;
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 320px;
+      height: 100vh;
+      background: var(--dark);
+      z-index: 2000;
+      padding: 2.5rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      border-left: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .mobile-drawer.open { right: 0; }
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .drawer-overlay.active { opacity: 1; pointer-events: all; }
+    .drawer-close { align-self: flex-end; background: none; border: none; color: #FFF; font-size: 1.5rem; cursor: pointer; }
+    .mobile-nav-list { list-style: none; display: flex; flex-direction: column; gap: 1.4rem; }
+    .mobile-nav-link { color: #FFF; text-decoration: none; font-size: 1.3rem; font-family: 'Playfair Display', serif; display: flex; justify-content: space-between; }
+    .mobile-nav-link.active { color: var(--primary); }
+
+    /* Page Banner */
+    .contact-banner {
+      margin-top: 70px;
+      background: radial-gradient(circle at 80% 50%, #3D0D23 0%, var(--dark) 100%);
+      color: #FFF;
+      padding: 4rem 5%;
+      text-align: center;
+      position: relative;
+    }
+
+    .contact-banner h1 {
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      margin-bottom: 0.6rem;
+    }
+
+    .contact-banner p {
+      color: var(--accent);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Main Contact Split Section */
+    .contact-container {
+      max-width: 1200px;
+      margin: 3.5rem auto 5rem;
+      padding: 0 5%;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    /* Form Column */
+    .form-card {
+      background: #FFF;
+      border-radius: var(--radius-md);
+      padding: 2.5rem;
+      box-shadow: 0 15px 40px rgba(26, 10, 15, 0.05);
+      border: 1px solid var(--glass-border);
+    }
+
+    .form-card h2 {
+      font-size: 1.8rem;
+      color: var(--dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--dark);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid #E6D0D8;
+      background: #FFF9FA;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--primary);
+      background: #FFF;
+      box-shadow: 0 0 12px rgba(255, 107, 157, 0.25);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #FFF;
+      border: none;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 8px 25px rgba(255, 107, 157, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(255, 107, 157, 0.55);
+    }
+
+    /* Right Info & Concierge Column */
+    .info-column {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .concierge-card {
+      background: radial-gradient(circle at 50% 50%, #2D0B1C 0%, var(--dark) 100%);
+      color: #FFF;
+      padding: 2.5rem 2rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 107, 157, 0.3);
+    }
+
+    .concierge-card h3 {
+      font-size: 1.5rem;
+      color: var(--gold-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-channel {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 1.4rem;
+    }
+
+    .channel-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .channel-details h4 {
+      font-size: 0.95rem;
+      color: #FFF;
+      margin-bottom: 2px;
+    }
+
+    .channel-details p {
+      font-size: 0.88rem;
+      color: var(--accent);
+    }
+
+    /* Social Icons Strip */
+    .social-strip {
+      display: flex;
+      gap: 14px;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .social-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .social-btn:hover {
+      background: var(--primary);
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+    }
+
+    /* Map Box */
+    .map-box {
+      background: #FFF;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .map-inner {
+      height: 220px;
+      background: radial-gradient(circle at center, #3F0E25, var(--dark));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #FFF;
+      text-align: center;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .map-inner i {
+      font-size: 2.2rem;
+      color: var(--secondary);
+      margin-bottom: 0.8rem;
+    }
+
+    .map-inner h4 {
+      font-size: 1.15rem;
+      color: var(--gold-light);
+    }
+
+    .map-inner p {
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      max-width: 900px;
+      margin: 0 auto 6rem;
+      padding: 0 5%;
+    }
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .faq-header h2 {
+      font-size: clamp(2rem, 3.5vw, 2.6rem);
+      color: var(--dark);
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .faq-item {
+      background: #FFF;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .faq-question {
+      padding: 1.4rem 1.8rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--dark);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .faq-question i {
+      color: var(--secondary);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.open .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      padding: 0 1.8rem;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+      padding: 0 1.8rem 1.5rem;
+    }
+
+    /* Cart Drawer */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 100%;
+      max-width: 400px;
+      height: 100vh;
+      background: #FFF;
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.2);
+      z-index: 2500;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .cart-drawer.open { right: 0; }
+    .cart-header { padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; background: var(--light); }
+    .cart-header h3 { font-size: 1.3rem; color: var(--dark); }
+    .cart-close { background: none; border: none; font-size: 1.2rem; color: var(--text); cursor: pointer; }
+    .cart-items { flex-grow: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem; }
+    .cart-item { display: flex; gap: 12px; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid #F0F0F0; }
+    .cart-item-img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+    .cart-item-info { flex-grow: 1; }
+    .cart-item-title { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
+    .cart-item-price { color: var(--secondary); font-weight: 700; font-size: 0.88rem; }
+    .cart-item-remove { background: none; border: none; color: #999; cursor: pointer; }
+    .cart-footer { padding: 1.5rem; border-top: 1px solid rgba(0,0,0,0.08); background: var(--light); }
+    .cart-subtotal { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--dark); }
+    .checkout-btn { width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #FFF; border: none; border-radius: var(--radius-pill); font-weight: 700; font-size: 1rem; cursor: pointer; }
+
+    /* Toast */
+    .toast-msg {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(26, 10, 15, 0.92);
+      color: #FFF;
+      border: 1px solid var(--primary);
+      padding: 12px 24px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      transition: transform 0.4s ease;
+      pointer-events: none;
+    }
+    .toast-msg.show { transform: translateX(-50%) translateY(0); }
+
+    /* Footer */
+    footer.main-footer {
+      background: var(--dark);
+      color: #FFF;
+      padding: 4rem 5% 2rem;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .contact-container { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div id="loader">
+    <div class="loader-emblem"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-text">LUMIÈRE<span style="color:var(--gold);">.</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="products.html" class="nav-link">Shop</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link active">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="open-cart-btn" title="Shopping Bag">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-badge" id="cart-counter">0</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+  <div class="mobile-drawer" id="mobile-drawer">
+    <button class="drawer-close" id="drawer-close-btn">&times;</button>
+    <a href="index.html" class="brand-logo">
+      <span class="logo-text">LUMIÈRE<span style="color:var(--gold);">.</span></span>
+    </a>
+    <ul class="mobile-nav-list">
+      <li><a href="index.html" class="mobile-nav-link">Home <i class="fas fa-chevron-right"></i></a></li>
+      <li><a href="products.html" class="mobile-nav-link">Shop Collection <i class="fas fa-chevron-right"></i></a></li>
+      <li><a href="about.html" class="mobile-nav-link">Our Story <i class="fas fa-chevron-right"></i></a></li>
+      <li><a href="contact.html" class="mobile-nav-link active">Contact Us <i class="fas fa-chevron-right"></i></a></li>
+    </ul>
+  </div>
+
+  <!-- Banner -->
+  <div class="contact-banner">
+    <h1>Lumière Concierge</h1>
+    <p>"Your glow journey is our highest priority. We welcome your inquiries with grace and prompt devotion."</p>
+  </div>
+
+  <!-- Contact Container -->
+  <div class="contact-container">
+    <!-- Left Column: Form -->
+    <div class="form-card">
+      <h2>Send Us a Message</h2>
+      <p>Fill out the form below and our beauty advisors will respond within 24 hours.</p>
+
+      <form id="contact-form" onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+          <label for="contact-name">Your Full Name</label>
+          <input type="text" id="contact-name" class="form-input" placeholder="e.g. Eleanor Vance" required>
+        </div>
+
+        <div class="form-group">
+          <label for="contact-email">Email Address</label>
+          <input type="email" id="contact-email" class="form-input" placeholder="eleanor@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="contact-category">Inquiry Subject</label>
+          <select id="contact-category" class="form-select">
+            <option value="consultation">Bespoke Skincare Consultation</option>
+            <option value="order">Order Tracking &amp; Delivery</option>
+            <option value="press">Press, Media &amp; PR Inquiries</option>
+            <option value="wholesale">Wholesale &amp; Retail Partnerships</option>
+            <option value="general">General Love Note</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="contact-message">Your Message</label>
+          <textarea id="contact-message" class="form-textarea" placeholder="Tell us how we can assist you on your radiance journey..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">
+          <span>Send To Concierge</span> <i class="fas fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Right Column: Concierge Info, Map & Social -->
+    <div class="info-column">
+      <div class="concierge-card">
+        <h3>Direct Concierge</h3>
+
+        <div class="contact-channel">
+          <div class="channel-icon"><i class="fas fa-envelope"></i></div>
+          <div class="channel-details">
+            <h4>Email Support</h4>
+            <p>concierge@lumierebeauty.com</p>
+          </div>
+        </div>
+
+        <div class="contact-channel">
+          <div class="channel-icon"><i class="fas fa-phone-alt"></i></div>
+          <div class="channel-details">
+            <h4>Phone &amp; WhatsApp VIP</h4>
+            <p>+1 (800) 586-4373 (Mon - Fri: 9am - 8pm EST)</p>
+          </div>
+        </div>
+
+        <div class="contact-channel">
+          <div class="channel-icon"><i class="fas fa-map-pin"></i></div>
+          <div class="channel-details">
+            <h4>Flagship Atelier</h4>
+            <p>18 Rue du Faubourg Saint-Honoré, Paris</p>
+          </div>
+        </div>
+
+        <div class="social-strip">
+          <a href="#" class="social-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn" title="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="#" class="social-btn" title="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+          <a href="#" class="social-btn" title="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <!-- Map Card -->
+      <div class="map-box">
+        <div class="map-inner">
+          <i class="fas fa-location-dot"></i>
+          <h4>Paris • New York • Mumbai</h4>
+          <p>Boutique Showrooms &amp; Experiential Glow Lounges</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Accordion -->
+  <section class="faq-section">
+    <div class="faq-header">
+      <span style="color: var(--secondary); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.2em;">Assistance</span>
+      <h2>Frequently Asked Inquiries</h2>
+    </div>
+
+    <div class="faq-list">
+      <!-- FAQ 1 -->
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>Are Lumière Beauty formulations suitable for ultra-sensitive skin?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, unconditionally. Every product is dermatologically tested on reactive and allergy-prone skin profiles. Our formulas omit synthetic fragrances, essential oil allergens, parabens, and micro-plastics.</p>
+        </div>
+      </div>
+
+      <!-- FAQ 2 -->
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>How long does domestic and international delivery take?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Orders are packaged with biodegradable pink mulberry tissue and dispatched within 24 hours. Express domestic delivery arrives in 2-3 business days, while global air freight delivers in 4-6 business days.</p>
+        </div>
+      </div>
+
+      <!-- FAQ 3 -->
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>What is your return &amp; satisfaction policy?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>We want you to adore your daily ritual. If a formulation does not bring light to your complexion, you may return it within 30 days for a complimentary exchange or full refund with free prepaid courier pickup.</p>
+        </div>
+      </div>
+
+      <!-- FAQ 4 -->
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>Are your containers recyclable or refillable?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Yes. All our flacons are engineered from 100% recyclable French flint glass. We offer discounted refill cartridges for our lipsticks and moisturizer jars to minimize single-use waste.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h3>Your Glow Bag (<span id="cart-item-count">0</span>)</h3>
+      <button class="cart-close" id="cart-close-btn">&times;</button>
+    </div>
+    <div class="cart-items" id="cart-items-container"></div>
+    <div class="cart-footer">
+      <div class="cart-subtotal">
+        <span>Subtotal:</span>
+        <span id="cart-subtotal-val">₹0</span>
+      </div>
+      <button class="checkout-btn" onclick="triggerCheckout()">Proceed to Checkout ✨</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-msg" id="toast">
+    <i class="fas fa-check-circle" style="color: var(--gold);"></i>
+    <span id="toast-text"></span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-text">LUMIÈRE<span style="color:var(--gold);">.</span></span>
+      </a>
+      <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">
+        &copy; 2026 Lumière Beauty. Cruelty-Free • 100% Vegan • Luxury Redefined.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Loader
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      setTimeout(() => {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.style.visibility = 'hidden', 500);
+      }, 300);
+    });
+
+    // Form Handling
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Transmitting...`;
+      btn.disabled = true;
+
+      setTimeout(() => {
+        btn.innerHTML = `<span>Sent with Radiance</span> <i class="fas fa-check"></i>`;
+        btn.style.background = '#2D9B62';
+        showToast('Your message has been sent to our concierge!');
+        document.getElementById('contact-form').reset();
+
+        setTimeout(() => {
+          btn.innerHTML = `<span>Send To Concierge</span> <i class="fas fa-paper-plane"></i>`;
+          btn.style.background = 'linear-gradient(135deg, var(--primary), var(--secondary))';
+          btn.disabled = false;
+        }, 3000);
+      }, 1000);
+    }
+
+    // FAQ Accordion
+    function toggleFaq(questionEl) {
+      const item = questionEl.parentElement;
+      const isOpen = item.classList.contains('open');
+
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+
+      if (!isOpen) {
+        item.classList.add('open');
+      }
+    }
+
+    // ---------------------------------------------
+    // Cart Logic
+    // ---------------------------------------------
+    let cart = JSON.parse(localStorage.getItem('lumiere_cart')) || [];
+
+    function updateCartUI() {
+      const counter = document.getElementById('cart-counter');
+      const drawerCount = document.getElementById('cart-item-count');
+      const container = document.getElementById('cart-items-container');
+      const subtotalVal = document.getElementById('cart-subtotal-val');
+
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      counter.textContent = totalItems;
+      drawerCount.textContent = totalItems;
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; color: #999; margin: auto; padding: 2rem;">
+            <i class="fas fa-shopping-bag" style="font-size: 2.5rem; color: #E0D0D5; margin-bottom: 1rem; display: block;"></i>
+            Your shopping bag is empty.
+          </div>
+        `;
+        subtotalVal.textContent = '₹0';
+        return;
+      }
+
+      let subtotal = 0;
+      container.innerHTML = cart.map((item, idx) => {
+        subtotal += item.price * item.quantity;
+        return `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.title}" class="cart-item-img">
+            <div class="cart-item-info">
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-price">₹${item.price} x ${item.quantity}</div>
+            </div>
+            <button class="cart-item-remove" onclick="removeFromCart(${idx})" title="Remove">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      subtotalVal.textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+      localStorage.setItem('lumiere_cart', JSON.stringify(cart));
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+      showToast('Item removed from your bag');
+    }
+
+    const openCartBtn = document.getElementById('open-cart-btn');
+    const cartCloseBtn = document.getElementById('cart-close-btn');
+    const cartDrawer = document.getElementById('cart-drawer');
+    const drawerOverlay = document.getElementById('drawer-overlay');
+
+    openCartBtn.addEventListener('click', () => {
+      cartDrawer.classList.add('open');
+      drawerOverlay.classList.add('active');
+    });
+
+    cartCloseBtn.addEventListener('click', () => {
+      cartDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('active');
+    });
+
+    drawerOverlay.addEventListener('click', () => {
+      cartDrawer.classList.remove('open');
+      document.getElementById('mobile-drawer').classList.remove('open');
+      drawerOverlay.classList.remove('active');
+    });
+
+    // Mobile Drawer
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-drawer').classList.add('open');
+      drawerOverlay.classList.add('active');
+    });
+
+    document.getElementById('drawer-close-btn').addEventListener('click', () => {
+      document.getElementById('mobile-drawer').classList.remove('open');
+      drawerOverlay.classList.remove('active');
+    });
+
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-text').textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function triggerCheckout() {
+      if (cart.length === 0) {
+        showToast('Your bag is currently empty!');
+        return;
+      }
+      alert('Thank you for shopping with Lumière Beauty!');
+      cart = [];
+      updateCartUI();
+      cartDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('active');
+    }
+
+    updateCartUI();
+  </script>
+</body>
+</html>
